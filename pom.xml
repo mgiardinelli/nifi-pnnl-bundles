@@ -6,7 +6,7 @@
 
     <groupId>gov.pnnl.nifi</groupId>
     <artifactId>nifi-pnnl-bundles</artifactId>
-    <version>0.3.0</version>
+    <version>0.4.0</version>
     <packaging>pom</packaging>
 
     <modules>
@@ -15,7 +15,7 @@
 
 
     <properties>
-        <nifiVersion>0.3.0</nifiVersion>
+        <nifiVersion>0.4.0</nifiVersion>
         <junit>4.12</junit>
         <bazaarvoice>0.0.12</bazaarvoice>
         <es.version>1.7.1</es.version>

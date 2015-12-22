@@ -25,6 +25,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
 
+import com.google.gson.*;
+
 @EventDriven
 @Tags({"elasticsearch", "insert", "update", "write", "put"})
 @CapabilityDescription("Writes the contents of a FlowFile to ElasticSearch")
@@ -177,12 +179,16 @@ public class PutElasticSearch extends AbstractElasticSearchProcessor {
                 @Override
                 public void process(final InputStream in) throws IOException {
                     StreamUtils.fillBuffer(in, content, true);
-                }
-            });
 
-            final String input = new String(content);
-            bulk.add(esClient.prepareIndex(getIndex(input), getType(input), getId(input))
-                    .setSource(getSource(input)));
+                    final String input = new String(content);
+                    final JsonParser parser = new JsonParser();
+                    final JsonObject json = parser.parse(input).getAsJsonObject();
+                    bulk.add(esClient.prepareIndex(getIndex(json), getType(json), getId(json))
+                            .setSource(getSource(json)));
+
+                }
+
+            });
 
         }
         return bulk;

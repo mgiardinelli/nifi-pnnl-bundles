@@ -155,11 +155,9 @@ public abstract class AbstractElasticSearchProcessor extends AbstractProcessor{
      * @param input
      * @return
      */
-    public String getIndex(final String input) {
-        JsonParser parser = new JsonParser();
-        final JsonObject jsonObject = parser.parse(input).getAsJsonObject();
+    public String getIndex(final JsonObject input) {
 
-        return extractIndexString(jsonObject);
+        return extractIndexString(input);
     }
 
     /**
@@ -167,7 +165,7 @@ public abstract class AbstractElasticSearchProcessor extends AbstractProcessor{
      * @param input
      * @return
      */
-    public String getType(final String input) {
+    public String getType(final JsonObject input) {
         return "status";
     }
 
@@ -176,10 +174,9 @@ public abstract class AbstractElasticSearchProcessor extends AbstractProcessor{
      * @param input
      * @return
      */
-    public String getId(final String input) {
-        JsonParser parser = new JsonParser();
-        final JsonObject jsonObject = parser.parse(input).getAsJsonObject();
-        return jsonObject.get("id").getAsString();
+    public String getId(final JsonObject input) {
+
+        return input.get("id").getAsString();
     }
 
     /**
@@ -187,8 +184,8 @@ public abstract class AbstractElasticSearchProcessor extends AbstractProcessor{
      * @param input
      * @return
      */
-    public byte[] getSource(final String input) {
-        String jsonString = input;
+    public byte[] getSource(final JsonObject input) {
+        String jsonString = input.toString();
         jsonString = jsonString.replace("\r\n", " ").replace('\n', ' ').replace('\r', ' ');
         return jsonString.getBytes(StandardCharsets.UTF_8);
     }
